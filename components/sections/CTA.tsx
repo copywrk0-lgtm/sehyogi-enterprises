@@ -1,0 +1,2 @@
+import { ArrowUpRight, MessageCircle } from "lucide-react";
+export function CTA(){return <section className="cta"><div className="container cta-inner"><div><span className="eyebrow">Ready when you are</span><h2>Bring us your<br/><em>electricity bill.</em></h2></div><div><p>Start with a conversation. Then move to a proper site assessment and quotation.</p><a className="btn primary" href="/contact">Talk to Sehyogi <MessageCircle size={17}/></a></div></div></section>}

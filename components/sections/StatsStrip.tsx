@@ -1,0 +1,1 @@
+export function StatsStrip(){return <div className="stats-strip"><div><b>UPNEDA</b><span>Approved vendor listing</span></div><div><b>10 kVA</b><span>Publicly listed project scale</span></div><div><b>5 kVA</b><span>HP petrol pump project listing</span></div><div><b>BAREILLY</b><span>Local solar presence</span></div></div>}

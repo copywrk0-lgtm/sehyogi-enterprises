@@ -1,0 +1,3 @@
+import { ArrowUpRight } from "lucide-react";
+import { Reveal } from "../ui/Reveal";
+export function SolutionBlock({icon,index,title,text,dark=false}:{icon:React.ReactNode,index:string,title:string,text:string,dark?:boolean}){return <section className={`solution ${dark?"dark":""}`}><div className="container solution-grid"><Reveal><div className="solution-icon">{icon}</div><span className="eyebrow">{index}</span><h2 className="h2">{title}</h2></Reveal><Reveal className="delay-1"><p className="lead">{text}</p><a className="btn light" href="/contact">Discuss this solution <ArrowUpRight size={16}/></a></Reveal></div></section>}

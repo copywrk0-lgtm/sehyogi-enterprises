@@ -1,0 +1,4 @@
+"use client";
+import { useState } from "react";
+export function FAQ(){const qs=[["Is the calculator exact?","No. It is an indicative planning tool. Final sizing depends on the site, tariff, equipment and applicable rules."],["Can I request a quote on WhatsApp?","Yes. The contact and calculator pages can prepare a useful first message for WhatsApp."],["Do you handle commercial projects?","The demo positions Sehyogi for residential and commercial solar discussions; exact project scope should be confirmed directly."]];return <div className="faq">{qs.map(([q,a],i)=><FAQRow key={i} q={q} a={a}/>)}</div>}
+function FAQRow({q,a}:{q:string,a:string}){const[o,setO]=useState(false);return <button className="faq-row" onClick={()=>setO(!o)}><div><b>{q}</b>{o&&<p>{a}</p>}</div><span>{o?"−":"+"}</span></button>}

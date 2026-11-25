@@ -1,22 +1,31 @@
-# Sehyogi Enterprises — Solar Demo
+# Sehyogi Enterprises — Solar Website
 
-Static multi-page demo built from the supplied solar concept.
+Premium multi-page Next.js demo for Sehyogi Enterprises, Bareilly.
 
-Pages:
-- index.html — Home
-- solutions.html — Solutions
-- calculator.html — Interactive solar calculator
-- about.html — About
-- contact.html — Contact
+## Pages
+- `/`
+- `/solutions`
+- `/projects`
+- `/calculator`
+- `/about`
+- `/contact`
 
-Features:
-- Solar-themed loading animation
-- Scroll reveal animations via IntersectionObserver
-- Animated counters / marquee
-- Responsive mobile navigation-ready layout
-- Interactive solar calculator
-- FAQ accordion
-- WhatsApp + call CTAs
-- No framework required; open `index.html` directly or serve the folder with any static server.
+## Run
+```bash
+npm install
+npm run dev
+```
 
-The calculator is intentionally labeled as indicative and does not present savings as guaranteed.
+## Production checks
+```bash
+npm run build
+```
+
+Set `NEXT_PUBLIC_SITE_URL` in production to the final public URL. The app sitemap is generated from that value; it intentionally does not hard-code an unverified domain.
+
+## Verified business references used in the demo
+- UPNEDA approved-firms listing: vendor code `BRY2211290200`, Bareilly, phone `9897039429`, email `sehyogienterprises@gmail.com`.
+- UTL's public Bareilly dealer profile lists Sehyogi Enterprises as an authorized UTL franchise and references 10 kVA, 5 kVA HP Petrol Pump and 3 kVA installations.
+
+## Calculator disclaimer
+The calculator is an indicative planning tool. Final sizing, savings, subsidy eligibility, tariff assumptions, equipment selection and project scope must be confirmed through a site assessment and current applicable rules.
