@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="hi-Latn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Solar concept preview</title>
+<style>
+:root{
+  --cell:#17294A; --frame:#C5CDD6; --paper:#E4E8E1; --ink:#101820; --warn:#E3B20F; --stamp:#A82A22; --light:#F2F5F8;
+  --mono:ui-monospace,"Courier New",monospace; --sans:system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.5 var(--sans);color:var(--light);background:var(--cell);padding-bottom:76px;overflow-x:hidden}
+.grid{background-color:var(--cell);
+  background-image:repeating-linear-gradient(90deg,rgba(197,205,214,.16) 0 1px,transparent 1px 44px),repeating-linear-gradient(0deg,rgba(197,205,214,.16) 0 1px,transparent 1px 44px)}
+section{padding:40px 16px;max-width:760px;margin:0 auto}
+.band{width:100%}
+.band>section{padding-top:36px;padding-bottom:36px}
+.paperband{background:var(--paper);color:var(--ink)}
+h1,h2{font-weight:800;letter-spacing:-.01em;line-height:1.15}
+h1{font-size:clamp(28px,8vw,44px);margin-bottom:10px}
+h2{font-size:clamp(23px,6vw,31px);margin-bottom:8px}
+p.sub{max-width:52ch;margin-bottom:20px;color:var(--frame)}
+.paperband p.sub{color:#2b3640}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);box-shadow:0 0 0 6px var(--warn);outline-offset:2px}
+.banner{background:var(--warn);color:var(--ink);font-size:13px;font-weight:700;padding:6px 16px;text-align:center}
+header.top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;max-width:760px;margin:0 auto;gap:12px}
+header.top b{font-size:18px}
+header.top span{font-size:14px;color:var(--frame)}
+/* bill */
+.bill{background:var(--paper);color:var(--ink);font-family:var(--mono);padding:16px 16px 26px;position:relative;
+  -webkit-mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) bottom/16px 51% repeat-x,linear-gradient(#000,#000) top/100% 51% no-repeat;
+  mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) bottom/16px 51% repeat-x,linear-gradient(#000,#000) top/100% 51% no-repeat}
+.bill .hd{display:flex;justify-content:space-between;font-size:12px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:10px;gap:8px}
+.row{display:flex;justify-content:space-between;font-size:14px;padding:3px 0;border-bottom:1px dotted #8a948c;gap:8px}
+.row.off{color:#1f5a34}
+.total{display:flex;justify-content:space-between;align-items:flex-end;margin-top:12px;gap:8px}
+.total .lbl{font-size:13px}
+.total .amt{font-size:clamp(34px,11vw,52px);font-weight:700;line-height:1}
+.was{font-size:14px;text-decoration:line-through;color:#5b665f;min-height:20px}
+.strip{height:14px;background:#cfd5cb;margin-top:10px;border:1px solid var(--ink)}
+.strip i{display:block;height:100%;background:var(--ink);width:100%;transition:width .35s ease}
+.stamp{position:absolute;right:10px;top:46px;border:2px solid var(--stamp);color:var(--stamp);font-weight:700;font-size:12px;padding:2px 6px;transform:rotate(-8deg);background:rgba(228,232,225,.9)}
+.save{margin-top:10px;font-size:14px;font-weight:700}
+.ctrl{margin-top:18px;background:var(--frame);color:var(--ink);padding:14px 16px;border-left:6px solid var(--warn)}
+label{display:block;font-weight:700;font-size:15px;margin-bottom:4px}
+.ctrl output{font-family:var(--mono);font-weight:700}
+input[type=range]{width:100%;height:44px;accent-color:var(--cell)}
+input[type=number],input[type=text]{width:100%;min-height:48px;padding:8px 10px;font:inherit;font-family:var(--mono);border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:420px){.two{grid-template-columns:1fr}}
+.note{font-size:13px;color:#2b3640;margin-top:6px}
+.cell .note,.grid .note{color:var(--frame)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 18px;font:700 16px var(--sans);background:var(--warn);color:var(--ink);border:2px solid var(--ink);text-decoration:none;cursor:pointer;border-radius:0}
+.btn.alt{background:var(--paper)}
+.result{margin-top:14px;padding:12px 14px;border:2px solid var(--ink);background:#fff;font-family:var(--mono);font-size:15px}
+.result b{font-size:20px}
+.chart{background:var(--paper);color:var(--ink);padding:10px;margin-top:12px;border:2px solid var(--ink)}
+.chart svg{width:100%;height:auto;display:block}
+.kv{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px}
+.facts dt{font-weight:700}
+.facts dd{margin:0 0 12px;font-family:var(--mono);background:#fff;border:2px dashed var(--ink);padding:8px 10px}
+ol.steps{list-style:none;padding:0;border-left:4px solid var(--frame);margin-left:6px}
+ol.steps li{padding:2px 0 16px 16px;position:relative}
+ol.steps li::before{content:"";position:absolute;left:-10px;top:6px;width:16px;height:16px;background:var(--warn);border:2px solid var(--ink)}
+ol.steps b{display:block}
+footer{padding:20px 16px;text-align:center;font-size:13px;color:var(--frame)}
+.bar{position:fixed;left:0;right:0;bottom:0;display:flex;z-index:20;padding-bottom:env(safe-area-inset-bottom,0)}
+.bar a{flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;font-weight:800;text-decoration:none;font-size:16px;border-top:2px solid var(--ink)}
+.bar .wa{background:var(--warn);color:var(--ink)}
+.bar .call{background:var(--paper);color:var(--ink);border-left:2px solid var(--ink)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="banner">Concept preview &mdash; sab numbers illustration hain</div>
+
+<div class="grid">
+<header class="top"><b data-cfg="brand"></b><span data-cfg="city"></span></header>
+<section id="hero">
+  <h1>Apna bijli bill khud chhota karke dekho.</h1>
+  <p class="sub">Neeche slider khiskao. Jitne kW ke panel, utna bill kam. Bill ki jagah apna monthly bill daalo.</p>
+
+  <div class="bill" aria-live="polite">
+    <div class="hd"><span>BIJLI BILL (namoona)</span><span>Mahina: 30 din</span></div>
+    <div class="stamp">ILLUSTRATION</div>
+    <div class="row"><span>Units use hue</span><span id="bUnits">0</span></div>
+    <div class="row off"><span>Solar se bane (kam)</span><span id="bOff">0</span></div>
+    <div class="row"><span>Grid se units</span><span id="bNet">0</span></div>
+    <div class="row"><span>Fixed charge</span><span id="bFix">0</span></div>
+    <div class="was" id="bWas"></div>
+    <div class="total"><span class="lbl">Dena hoga</span><span class="amt" id="bNew">0</span></div>
+    <div class="strip" aria-hidden="true"><i id="bBar"></i></div>
+    <div class="save" id="bSave"></div>
+  </div>
+
+  <div class="ctrl">
+    <label for="kw">Solar panel: <output id="kwOut"></output></label>
+    <input type="range" id="kw" min="0" max="10" step="0.5" value="3">
+    <label for="bill" style="margin-top:10px">Abhi ka monthly bill (&#8377;)</label>
+    <input type="number" id="bill" inputmode="numeric" min="500" max="100000" value="4000">
+  </div>
+</section>
+</div>
+
+<div class="paperband band">
+<section id="size">
+  <h2>Aapki chhat par kitne kW aayenge?</h2>
+  <p class="sub">Bill aur chhat ki khali jagah daalo. Hum bataenge kitna size chahiye aur jagah kaafi hai ya nahi.</p>
+  <label for="roof">Chhat ki khali jagah (sq ft)</label>
+  <input type="number" id="roof" inputmode="numeric" min="0" value="400">
+  <div class="result" id="sizeRes" aria-live="polite"></div>
+  <p class="note">Illustration: 1 kW ke liye lagbhag <span id="roofPer"></span> sq ft maana hai. Asli size site survey ke baad tay hota hai.</p>
+  <div style="margin-top:12px"><button class="btn" id="useSize" type="button">Ye size slider mein lagao</button></div>
+</section>
+</div>
+
+<div class="grid band">
+<section id="payback">
+  <h2>Panel ka paisa kitne saal mein wapas?</h2>
+  <p class="sub">Line zero se upar jaaye, tab tak ka kharcha wapas. Size slider se badlega.</p>
+  <div class="chart"><svg id="chart" viewBox="0 0 320 190" role="img" aria-label="25 saal ki bachat ka chart (illustration)"></svg></div>
+  <div class="result" id="payRes" aria-live="polite" style="color:var(--ink)"></div>
+</section>
+</div>
+
+<div class="paperband band">
+<section id="assume">
+  <h2>Ye maan ke chale hain. Badal ke dekho.</h2>
+  <p class="sub">Har number illustration hai. Apne asli rate se badlo, upar ke sab tools turant badal jaayenge.</p>
+  <div class="two">
+    <div><label for="tariff">Bijli rate (&#8377; per unit)</label><input type="number" id="tariff" step="0.1" value="7"></div>
+    <div><label for="gen">Ek kW se units / mahina</label><input type="number" id="gen" step="1" value="120"></div>
+    <div><label for="fixed">Fixed charge (&#8377; / mahina)</label><input type="number" id="fixed" step="10" value="150"></div>
+    <div><label for="cost">Install rate (&#8377; per kW)</label><input type="number" id="cost" step="1000" value="60000"></div>
+    <div><label for="subsidy">Subsidy (&#8377; total)</label><input type="number" id="subsidy" step="1000" value="0"></div>
+    <div><label for="rise">Bijli rate saalana badhe (%)</label><input type="number" id="rise" step="0.5" value="3"></div>
+  </div>
+  <p class="note">[Subsidy ki raqam current scheme se check karke daalo. Abhi 0 hai.] Panel ki production har saal 0.7% ghatti maani gayi hai. Bachi hui bijli ka export hisaab mein nahi liya.</p>
+</section>
+</div>
+
+<div class="grid band">
+<section id="steps">
+  <h2>Kaam kaise hota hai</h2>
+  <p class="sub">[Apne asli process se badlo. Ye sirf dhaancha hai.]</p>
+  <ol class="steps">
+    <li><b>Chhat ka survey</b>Hamari team aapki chhat dekhti hai. [Survey free hai ya nahi: likho]</li>
+    <li><b>Size aur quote</b>Aapke bill ke hisaab se size aur likha hua quote.</li>
+    <li><b>Installation</b>[Kitne din lagte hain: likho]</li>
+    <li><b>Net meter ki file</b>[Aap ye service dete hain ya nahi: confirm karo]</li>
+  </ol>
+</section>
+</div>
+
+<div class="paperband band">
+<section id="about">
+  <h2>Hamare baare mein</h2>
+  <p class="sub">Sirf wahi jo hum saabit kar sakein.</p>
+  <dl class="facts">
+    <dt>Kitne saal se</dt><dd>[Saal ka experience]</dd>
+    <dt>Ab tak kitni installations</dt><dd>[Ginti, agar proof ho]</dd>
+    <dt>Kaunse kaam karte hain</dt><dd>[Residential / commercial / society: list karo]</dd>
+    <dt>Brands aur certificates</dt><dd>[Panel / inverter brand, empanelment: sirf asli]</dd>
+    <dt>Customer reviews</dt><dd>[Google rating aur link, sirf asli]</dd>
+  </dl>
+</section>
+</div>
+
+<div class="grid band">
+<section id="contact">
+  <h2>Apna bill bhejo, size aur quote wapas aayega.</h2>
+  <p class="sub">Neeche ke numbers message mein apne aap judte hain.</p>
+  <label for="nm">Aapka naam</label>
+  <input type="text" id="nm" autocomplete="name" placeholder="Naam">
+  <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">
+    <a class="btn" id="sendWa" href="#">Mera bill WhatsApp pe bhejo</a>
+    <a class="btn alt" id="callBtn" href="#">Abhi call karo</a>
+  </div>
+  <p class="note" id="cfgNote"></p>
+</section>
+<footer><span data-cfg="brand"></span> &middot; <span data-cfg="city"></span> &middot; <span data-cfg="phone"></span><br>Concept preview. Sab numbers illustration hain.</footer>
+</div>
+
+<nav class="bar" aria-label="Sampark">
+  <a class="wa" id="barWa" href="#">WhatsApp karo</a>
+  <a class="call" id="barCall" href="#">Call karo</a>
+</nav>
+
+<script>
+const CONFIG = {
+  brand: "[Brand name]",
+  phone: "[+91 XXXXX XXXXX]",
+  whatsapp: "[91XXXXXXXXXX]",
+  city: "[City]",
+  roofSqftPerKw: 100
+};
+
+const $ = id => document.getElementById(id);
+const inr = n => "\u20B9" + Math.round(n).toLocaleString("en-IN");
+const num = (id, d) => { const v = parseFloat($(id).value); return isFinite(v) ? v : d; };
+
+document.querySelectorAll("[data-cfg]").forEach(e => e.textContent = CONFIG[e.dataset.cfg]);
+$("roofPer").textContent = CONFIG.roofSqftPerKw;
+
+const waDigits = CONFIG.whatsapp.replace(/\D/g, "");
+const phDigits = CONFIG.phone.replace(/\D/g, "");
+const hasWa = !/\[/.test(CONFIG.whatsapp) && waDigits.length >= 10;
+const hasPh = !/\[/.test(CONFIG.phone) && phDigits.length >= 10;
+const waUrl = t => "https://wa.me/" + (hasWa ? waDigits : "") + "?text=" + encodeURIComponent(t);
+["barCall", "callBtn"].forEach(i => $(i).href = hasPh ? "tel:+" + phDigits : "#");
+if (!hasWa || !hasPh) $("cfgNote").textContent = "[CONFIG mein phone aur WhatsApp number daalo, tab ye buttons chalenge.]";
+
+function model() {
+  const bill = Math.max(0, num("bill", 0)), kw = num("kw", 0);
+  const tariff = Math.max(.1, num("tariff", 7)), gen = Math.max(1, num("gen", 120));
+  const fixed = Math.min(bill, Math.max(0, num("fixed", 0)));
+  const units = Math.max(0, (bill - fixed) / tariff);
+  const made = kw * gen, off = Math.min(units, made), net = units - off;
+  const newBill = fixed + net * tariff;
+  return { bill, kw, tariff, gen, fixed, units, made, off, net, newBill, saved: bill - newBill };
+}
+
+function payback(m) {
+  const cost = num("cost", 0), subsidy = num("subsidy", 0), rise = num("rise", 0) / 100;
+  const net = Math.max(0, m.kw * cost - subsidy);
+  const pts = [-net]; let cum = -net, year = null;
+  for (let y = 1; y <= 25; y++) {
+    const g = m.made * Math.pow(0.993, y - 1);
+    const o = Math.min(m.units, g);
+    cum += o * m.tariff * Math.pow(1 + rise, y - 1) * 12;
+    pts.push(cum);
+    if (year === null && cum >= 0) year = y;
+  }
+  return { pts, year, net };
+}
+
+function drawChart(p) {
+  const W = 320, H = 190, L = 44, R = 8, T = 10, B = 24;
+  const lo = Math.min(...p.pts, 0), hi = Math.max(...p.pts, 1);
+  const x = i => L + (W - L - R) * i / 25;
+  const y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+  const d = p.pts.map((v, i) => (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1)).join("");
+  let s = '<rect x="' + L + '" y="' + T + '" width="' + (W - L - R) + '" height="' + (H - T - B) + '" fill="none" stroke="#101820" stroke-width="1"/>';
+  s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(0) + '" y2="' + y(0) + '" stroke="#A82A22" stroke-width="2" stroke-dasharray="5 3"/>';
+  s += '<path d="' + d + '" fill="none" stroke="#17294A" stroke-width="3"/>';
+  if (p.year) s += '<circle cx="' + x(p.year) + '" cy="' + y(p.pts[p.year]) + '" r="6" fill="#E3B20F" stroke="#101820" stroke-width="2"/>';
+  s += '<text x="' + L + '" y="' + (H - 6) + '" font-size="11" fill="#101820">Saal 0</text>';
+  s += '<text x="' + (W - R) + '" y="' + (H - 6) + '" font-size="11" text-anchor="end" fill="#101820">Saal 25</text>';
+  s += '<text x="' + (L - 4) + '" y="' + (T + 9) + '" font-size="10" text-anchor="end" fill="#101820">' + (hi >= 1e5 ? (hi / 1e5).toFixed(1) + "L" : Math.round(hi)) + '</text>';
+  s += '<text x="' + (L - 4) + '" y="' + (H - B) + '" font-size="10" text-anchor="end" fill="#101820">' + (lo <= -1e5 ? (lo / 1e5).toFixed(1) + "L" : Math.round(lo)) + '</text>';
+  $("chart").innerHTML = s;
+}
+
+function update() {
+  const m = model();
+  $("kwOut").textContent = m.kw.toFixed(1) + " kW";
+  $("bUnits").textContent = Math.round(m.units) + " unit";
+  $("bOff").textContent = "-" + Math.round(m.off) + " unit";
+  $("bNet").textContent = Math.round(m.net) + " unit";
+  $("bFix").textContent = inr(m.fixed);
+  $("bNew").textContent = inr(m.newBill);
+  $("bWas").textContent = m.kw > 0 ? "Pehle: " + inr(m.bill) : "";
+  $("bBar").style.width = (m.bill ? Math.max(1, m.newBill / m.bill * 100) : 0) + "%";
+  $("bSave").textContent = m.kw > 0 ? "Har mahine bachat (illustration): " + inr(m.saved) : "Slider khiskao, bill ghatega.";
+
+  const roof = num("roof", 0), maxKw = Math.floor(roof / CONFIG.roofSqftPerKw * 2) / 2;
+  const need = Math.max(.5, Math.ceil(m.units / m.gen * 2) / 2);
+  const fits = need <= maxKw;
+  $("sizeRes").innerHTML = "Bill ke hisaab se: <b>" + need.toFixed(1) + " kW</b><br>Chhat mein aayega: <b>" + maxKw.toFixed(1) + " kW</b><br>" +
+    (fits ? "Jagah kaafi hai." : "Jagah kam hai. Pura bill zero nahi hoga, lekin " + maxKw.toFixed(1) + " kW se bill kaafi ghategi.");
+  $("useSize").dataset.kw = Math.min(10, fits ? need : Math.max(0, maxKw));
+
+  const p = payback(m); drawChart(p);
+  $("payRes").innerHTML = m.kw === 0 ? "Slider khiskao." :
+    "Kharcha (subsidy ke baad): <b>" + inr(p.net) + "</b><br>Paisa wapas: <b>" + (p.year ? "lagbhag " + p.year + " saal mein" : "25 saal mein bhi nahi") + "</b><br>25 saal ki bachat, kharche ke baad: <b>" + inr(p.pts[25]) + "</b>";
+}
+
+["kw", "bill", "roof", "tariff", "gen", "fixed", "cost", "subsidy", "rise"].forEach(i => $(i).addEventListener("input", update));
+$("useSize").addEventListener("click", () => { $("kw").value = $("useSize").dataset.kw; update(); $("hero").scrollIntoView(); });
+
+function msg() {
+  const m = model(), n = $("nm").value.trim();
+  return "Namaste " + CONFIG.brand + ". " + (n ? "Mera naam " + n + " hai. " : "") +
+    "Mera monthly bill lagbhag " + inr(m.bill) + " hai. Mujhe " + m.kw.toFixed(1) + " kW ka solar dekhna hai (website ka illustration). Please size aur quote bhejiye. Shehar: " + CONFIG.city + ".";
+}
+$("sendWa").addEventListener("click", e => { e.preventDefault(); window.open(waUrl(msg()), "_blank", "noopener"); });
+$("barWa").addEventListener("click", e => { e.preventDefault(); window.open(waUrl(msg()), "_blank", "noopener"); });
+[$("callBtn"), $("barCall")].forEach(a => a.addEventListener("click", e => { if (!hasPh) { e.preventDefault(); $("cfgNote").textContent = "[CONFIG mein phone number daalo.]"; } }));
+
+update();
+</script>
+</body>
+</html>
